@@ -14,14 +14,14 @@ class StatsScreenVM(private var repository: BookRepository): ViewModel(){
 
     fun getGenreStats(): Map<String, Double> {
 
-        val genres = listOf("Average Price", "Biography", "Science Fiction", "Self-help" )
         val stats = mutableMapOf<String, Double>()
+        stats["Average Price"] = getAveragePrice()
+
+        val genres = listOf( "Biography", "Science Fiction", "Self-help" )
 
         genres.forEach { genre ->
             stats[genre] = getGenreAveragePrice(genre)
         }
-
-        stats["Average Price"] = getAveragePrice()
 
         return stats
     }

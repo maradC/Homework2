@@ -1,8 +1,6 @@
 package com.example.homework2
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -14,16 +12,31 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 
 @Composable
-fun AppInfoUI(modifier: Modifier = Modifier) {
+fun AppInfoUI(navController: NavHostController, modifier: Modifier = Modifier) {
     val viewModel = viewModel { AppInfoVM(MyApplication.x) }
     val name = viewModel.getName()
     val dev = viewModel.getDevName()
     val vers = viewModel.getVersion()
 
-
     Column(modifier = modifier.fillMaxSize().padding(16.dp)) {
+        Surface(
+            modifier = Modifier
+                .padding(20.dp)
+                .fillMaxWidth(),
+            shape = RoundedCornerShape(10.dp),
+            shadowElevation = 30.dp
+        ) {
+            Button(
+                onClick = { navController.popBackStack() },
+                modifier = Modifier.padding(10.dp)
+            ) {
+                Text("Back to Book List")
+            }
+        }
+
         Spacer(modifier = Modifier.height(16.dp))
         AppInfoSection(name, dev, vers)
     }
@@ -39,7 +52,6 @@ private fun AppInfoSection(appName: String, devName: String, version: String) {
         shadowElevation = 30.dp
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            // Heading for the app info
             Text(
                 text = "App Info",
                 color = MaterialTheme.colorScheme.primary,
@@ -51,7 +63,6 @@ private fun AppInfoSection(appName: String, devName: String, version: String) {
 
             Spacer(modifier = Modifier.height(5.dp))
 
-            // App info details
             Text(
                 text = "Name: $appName",
                 style = MaterialTheme.typography.bodyMedium,

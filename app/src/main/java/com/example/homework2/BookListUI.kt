@@ -14,23 +14,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 
 @Composable
-fun BookListUI(modifier: Modifier = Modifier) {
-
+fun BookListUI(navController: NavHostController, modifier: Modifier = Modifier) {
     val viewModel = viewModel { BookListViewModel(MyApplication.x) }
     val books = viewModel.getBooks()
 
-
     Column(modifier = modifier.fillMaxSize().padding(16.dp)) {
-        ButtonsSection()
+        ButtonsSection(navController)
         Spacer(modifier = Modifier.height(16.dp))
         BookListSection(books)
     }
 }
 
 @Composable
- private fun ButtonsSection() {
+private fun ButtonsSection(navController: NavHostController) {
     Surface(
         modifier = Modifier
             .padding(20.dp)
@@ -45,7 +44,7 @@ fun BookListUI(modifier: Modifier = Modifier) {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Button(
-                onClick = { /* Handle Button Click */ },
+                onClick = { navController.navigate("statistics") },
             ) {
                 Text("Statistics Screen")
             }
@@ -53,7 +52,7 @@ fun BookListUI(modifier: Modifier = Modifier) {
             Spacer(modifier = Modifier.width(7.dp))
 
             Button(
-                onClick = { /* Handle Button Click */ },
+                onClick = { navController.navigate("appinfo") },
             ) {
                 Text("App Info Screen")
             }
@@ -62,17 +61,15 @@ fun BookListUI(modifier: Modifier = Modifier) {
 }
 
 @Composable
- fun BookListSection(books: List<Book>) {
+fun BookListSection(books: List<Book>) {
     Surface(
         modifier = Modifier
             .padding(20.dp)
             .fillMaxWidth(),
-
         shape = RoundedCornerShape(10.dp),
         shadowElevation = 30.dp
     ) {
         Column(modifier = Modifier.padding(16.dp).fillMaxSize()) {
-            // Heading for the book list
             Heading("Book List")
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -104,12 +101,12 @@ private fun BookItem(book: Book) {
             color = MaterialTheme.colorScheme.primary
         )
         Text(
-            text = book.genre,
+            text = book.genre.trim(),
             style = MaterialTheme.typography.bodyMedium,
             color = Color.Magenta
         )
         Text(
-            text = "$${book.price}",
+            text = "$${String.format("%.2f", book.price)}",
             color = Color.Magenta,
             style = MaterialTheme.typography.bodyMedium
         )

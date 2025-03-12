@@ -1,7 +1,6 @@
 package com.example.homework2
 
 import android.app.Application
-import com.example.homework2.BookRepository
 
 class MyApplication : Application(){
     companion object {

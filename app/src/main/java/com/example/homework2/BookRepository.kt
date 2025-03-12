@@ -13,7 +13,6 @@ class BookRepository {
         appDeveloperName = "Chris Maradiaga"
         appVersion = "3.9.2"
 
-        // Hardcoding a list of books
         bookList = mutableListOf(
             Book("Joy Buolamwini Biography: Championing Humanity in the Age of AI ", "Biography ", 16.96),
             Book("Ada Lovelace: A Life from Beginning to End", "Biography ", 9.99),
